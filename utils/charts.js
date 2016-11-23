@@ -28,12 +28,33 @@ function createLineCharts(param) {
         canvasId = param.canvasId,
         context = wx.createContext();
 
-    var cMargin = 10
+    var cMargin = param.cMargin || 10;
 
-    var wlabel = 300,
-        hlabel = 200,
-        between = 15;
+    var wlabel = param.wlabel || 300,
+        hlabel =  param.hlabel || 225,
+        isShowBackground_line = param.isShowBackground_line || false,
+        between = 20;
+    
+    var Xmax, Ymax, Xmin, Ymin;
 
+    function getRangeValues(data) {
+        
+
+    }
+    // 比较大小
+    function getMax (pervalue, current) {
+        if (pervalue >= current) return pervalue
+        return current
+    }
+    // 比较大小
+    function getMin (pervalue, current) {
+        if (pervalue < current) return pervalue
+        return current
+    }
+
+
+
+    getRangeValues(line)
     // 设置图标
     function chartset () {
         context.translate(cMargin, hlabel + cMargin)
@@ -51,7 +72,15 @@ function createLineCharts(param) {
         context.stroke();
     }
     // 绘制背景线
-    function makerMap(_wlabel, _hlabel, _between) {
+    function makerMap(_wlabel, _hlabel, _between, isShow) {
+        if (!isShow) {
+            // 设置y 轴
+            drawAxis(0, 0, 0, hlabel * -1)
+            // 设置x 轴
+            drawAxis(0, 0, wlabel, 0)
+            return 
+        }
+
         for (var i = 0; i < parseInt(_wlabel/_between); i++ ) {
             drawAxis(i * _between, 0, i * _between, _hlabel * -1)
         }
@@ -95,15 +124,14 @@ function createLineCharts(param) {
 
 
     chartset()
-    // 设置y 轴
-    drawAxis(0, 0, 0, -180)
-    // 设置x 轴
-    drawAxis(0, 0, wlabel, 0)
+    
+
     // 绘制
-    makerMap(wlabel, hlabel,between)
-    // drawLine(line[0].points, colors[0])
+    console.log(wlabel, hlabel, wlabel/line[0].points.length)
+    makerMap(wlabel, hlabel, wlabel/line[0].points.length, isShowBackground_line)
+    drawLine(line[0].points, colors[0])
     drawLine(line[1].points, colors[1])
-    drawLineQuadratic(line[0].points,colors[2])
+    // drawLineQuadratic(line[0].points,colors[2])
 
 
 

@@ -1,6 +1,8 @@
 var Chart = require('../../utils/charts.js')
 Page({
     data: {
+        canvasWidth: 300,
+        canvasHeight: 400,
         charts: {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
             line:[
@@ -35,7 +37,11 @@ Page({
             data: this.data.charts,
             colors: ["#7158ec", "#fec312", "#1db2f4", "#ff3444"],
             canvasId: 'canvas_id',
-            radius : 50
+            radius : 50,
+            wlabel: this.data.canvasWidth,
+            hlabel: this.data.canvasHeight,
+            isShowBackground_line: true,
+            
         });
     }
 })
